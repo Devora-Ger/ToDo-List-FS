@@ -43,4 +43,11 @@ router.post('/', (req, res) => {
     res.send(`${task.taskName} has been added to the Database`);
 });
 
+router.get('/:id', (req, res)=>{
+    const {id} = req.params;
+    const task = tasks.filter((t)=>(t.taskId === id))
+    res.send(task);
+});
+
+
 export default router;

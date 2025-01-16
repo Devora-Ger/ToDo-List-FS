@@ -46,19 +46,45 @@ router.post('/', (req, res) => {
 router.get('/:id', (req, res)=>{
     const {id} = req.params;
     const task = tasks.filter((t)=>(t.taskId === id))
+    if(task.length === 0) {
+        res.send(`The task ${id} dont exist in the database`);
+    }
     res.send(task);
 });
 
 router.delete('/:id', (req, res)=>{
     const {id} = req.params;
-    if(tasks.find((t)=>(t.taskId === id))) {
+    if(!tasks.find((t)=>(t.taskId === id))) {
+        res.send(`The task ${id} dont exist in the database`);
+    } else {
         tasks = tasks.filter((t)=>(t.taskId !== id))
         res.send(`The task ${id} deleted successfully from database`);
-    } else {
-        res.send(`The task ${id} dont exist in the database`);
     }
     
 });
 
+router.patch('/:id', (req, res)=>{
+    const {id} = req.params;
+    const task = tasks.find((t)=>(t.taskId === id));
+    if(!task) {
+        res.send(`The task ${id} dont exist in the database`);
+    } else {
+        const {taskName, timeForecast, urgency} = req.body;
+        if(taskName) {
+            task.taskName = taskName;
+        }
+
+        if(timeForecast) {
+            task.timeForecast = timeForecast;
+        }
+
+        if(urgency) {
+            task.urgency = urgency;
+        }
+
+        res.send(`Task with the ${id} has been updated`)
+    }
+    
+});
 
 export default router;

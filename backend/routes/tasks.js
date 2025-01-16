@@ -3,7 +3,7 @@ import {v4 as uuid} from 'uuid';
 
 const router = express.Router();
 
-const tasks = [
+let tasks = [
     {
         taskName: 'Clean the kitchen',
         timeForecast: '02:00',
@@ -47,6 +47,17 @@ router.get('/:id', (req, res)=>{
     const {id} = req.params;
     const task = tasks.filter((t)=>(t.taskId === id))
     res.send(task);
+});
+
+router.delete('/:id', (req, res)=>{
+    const {id} = req.params;
+    if(tasks.find((t)=>(t.taskId === id))) {
+        tasks = tasks.filter((t)=>(t.taskId !== id))
+        res.send(`The task ${id} deleted successfully from database`);
+    } else {
+        res.send(`The task ${id} dont exist in the database`);
+    }
+    
 });
 
 

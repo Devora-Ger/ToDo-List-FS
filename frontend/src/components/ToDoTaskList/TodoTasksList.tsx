@@ -1,8 +1,9 @@
 import React from 'react';
-import {api} from '../api';
-import configData from '../config.json';
-import {isValidTaskArray} from '../services/ValidationResponse'
-interface Task {
+import {api} from '../../api';
+import configData from '../../config.json';
+import {isValidTaskArray} from '../../services/ValidationResponse'
+import { TaskCard } from '../TaskCard/TaskCard';
+export interface Task {
     taskName: string,
     timeForecast: string,
     urgency: number,
@@ -31,7 +32,9 @@ export const TodoTasksList: React.FC = () => {
             <h1>ToDo list</h1>
             <ul>
             {tasks.map((task)=>{
-                return(<li key={task.taskId}>{task.taskName}</li>);
+                return(<li key={task.taskId}>
+                        <TaskCard {...task} />
+                       </li>);
             })}
             </ul>
         </div>

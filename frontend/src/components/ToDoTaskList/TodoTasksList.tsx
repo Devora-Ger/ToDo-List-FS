@@ -17,7 +17,7 @@ export const TodoTasksList: React.FC = () => {
         getAllTasks();
 
         return (()=>{
-            //setTasks([]);
+           
         });
     }, [tasks]);
 
@@ -28,13 +28,31 @@ export const TodoTasksList: React.FC = () => {
         }
     } 
 
+    const deleteItem = React.useCallback(async (id: string) => {
+        const response = await api.delete(configData.serverURL+`tasks/${id}`);
+        if(response.data) {
+            setTasks((tasks) => tasks.filter((task) => task.taskId !== id));
+        }
+    },[]);
+
+    const updateItem = React.useCallback(async (id: string) => {
+        const task: Task[] = tasks.filter((task)=>(task.taskId===id));
+        if(task.length===1) {
+            const response = await api.patch(configData.serverURL+`tasks/${id}`, task);
+            if(response.data) { ///
+                tasks.push(task[0]);
+            }
+        }
+        
+        },[]);
+
     return(
         <div>
             <h1>ToDo list</h1>
             <ul>
-            {tasks.map((task)=>{
-                return(<li key={task.taskId}>
-                        <TaskCard {...task} />
+            {tasks.map((_task)=>{
+                return(<li key={_task.taskId}>
+                        <TaskCard onDelete={deleteItem} onUpdate={updateItem} task={_task} />
                        </li>);
             })}
             </ul>

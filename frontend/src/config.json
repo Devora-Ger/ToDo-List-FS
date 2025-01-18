@@ -1,3 +1,7 @@
 {
-    "serverURL" : "http://localhost:5000/"
+    "serverURL" : "http://localhost:5000/",
+    "massageToPrintCard" : {
+        "timeForecast": "How long will it take: ",
+        "urgency": "Urgency level: "
+    }
 }

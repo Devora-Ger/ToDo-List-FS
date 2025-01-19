@@ -35,16 +35,18 @@ export const TodoTasksList: React.FC = () => {
         }
     },[]);
 
-    const updateItem = React.useCallback(async (id: string) => {
-        const task: Task[] = tasks.filter((task)=>(task.taskId===id));
-        if(task.length===1) {
-            const response = await api.patch(configData.serverURL+`tasks/${id}`, task);
+    const updateItem = React.useCallback(async (newTask: Task) => {
+        const index = tasks.findIndex((task)=>task.taskId===newTask.taskId);
+        alert(`${newTask}`)
+        if(index < tasks.length && index >= 0) {
+            //const response = await api.patch("localhost:5000//tasks/8ea18537-9606-4c2a-a023-9e15e81d8490", newTask);
+            const response = await api.patch(configData.serverURL+`tasks//${newTask.taskId}`, newTask);
             if(response.data) { ///
-                tasks.push(task[0]);
+                const index = tasks.findIndex((task)=>task.taskId===newTask.taskId);
+                tasks[index] = newTask;
             }
         }
-        
-        },[]);
+    },[]);
 
     return(
         <div>

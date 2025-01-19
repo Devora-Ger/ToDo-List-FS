@@ -1,6 +1,7 @@
 {
     "serverURL" : "http://localhost:5000/",
     "massageToPrintCard" : {
+        "TaskName": "Task name",
         "timeForecast": "How long will it take: ",
         "urgency": "Urgency level: "
     }

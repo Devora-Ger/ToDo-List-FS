@@ -64,12 +64,15 @@ router.delete('/:id', (req, res)=>{
 });
 
 router.patch('/:id', (req, res)=>{
+    console.log("ggg");
     const {id} = req.params;
+    console.log(id);
     const task = tasks.find((t)=>(t.taskId === id));
     if(!task) {
         res.send(`The task ${id} dont exist in the database`);
     } else {
         const {taskName, timeForecast, urgency} = req.body;
+        console.log(taskName, timeForecast, urgency);
         if(taskName) {
             task.taskName = taskName;
         }
@@ -82,7 +85,7 @@ router.patch('/:id', (req, res)=>{
             task.urgency = urgency;
         }
 
-        res.send(`Task with the ${id} has been updated`)
+        res.send(`Task with the ${id} has been updated`);
     }
     
 });
